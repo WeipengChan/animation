@@ -108,12 +108,16 @@
 	self.transitionLayer = (ZBGridLayer *)inLayer;
 	
 	CGRect fromRect = [self.navigationController.view.layer convertRect:inLayer.frame fromLayer:inLayer.superlayer];
+ 
 	[CATransaction begin];
 	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-	[self.navigationController.view.layer addSublayer:self.transitionLayer];
+	//add 添加这个 专用于转换的视图
+    [self.navigationController.view.layer addSublayer:self.transitionLayer];
 	self.transitionLayer.frame = fromRect;
 	[CATransaction commit];
 	
+    
+   // [@"s" drawLayer:<#(CALayer *)#> inContext:<#(CGContextRef)#>]
 	CABasicAnimation *boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
 	boundsAnimation.fromValue = [NSValue valueWithCGRect:self.transitionLayer.frame];
 	boundsAnimation.toValue = [NSValue valueWithCGRect:self.navigationController.view.bounds];
@@ -124,13 +128,13 @@
 	
 	CATransition *t = [CATransition animation];
 	t.type = @"flip";
-//	t.type = @"cube";
+	//t.type = @"cube";
 	t.subtype = kCATransitionFromRight;
-	t.duration = 0.25;
+	t.duration = 0.5;
 	self.transitionLayer.contents = (id)screenshot.CGImage;
 	
 	CAAnimationGroup *group = [CAAnimationGroup animation];
-	group.duration = 0.5;
+	group.duration = 0.7;
 	group.animations = [NSArray arrayWithObjects:boundsAnimation, positionAnimation, nil];
 	group.fillMode = kCAFillModeForwards;
 	group.removedOnCompletion = NO;

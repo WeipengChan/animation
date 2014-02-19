@@ -142,6 +142,7 @@ static CGFloat itemWidth = 80.0;
 	[aLayer addAnimation:t forKey:@"flip"];		
 }
 
+//对view排下版咯
 - (void)layoutSubviews
 {
 	NSUInteger index = 0;

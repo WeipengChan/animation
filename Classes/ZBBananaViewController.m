@@ -30,6 +30,13 @@
 	aView.backgroundColor = [UIColor lightGrayColor];
 	self.view = aView;
 	[aView release];
+    
+    
+    UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0,  300, 80,80)];
+    
+    [self.view  addSubview:button];
+    [button setTitle:@"可暂停" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(pauseAndResume) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)viewDidLoad 
 {
@@ -43,6 +50,35 @@
 	}
 	[self move];
 }
+
+-(void)pauseAndResume
+{
+    if (bananaLayer.speed == 0)
+    {
+        [self resumeLayer:bananaLayer];
+    }
+    else
+    {
+        [self pauseLayer:bananaLayer];
+    }
+}
+
+-(void)pauseLayer:(CALayer*)layer {
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0.0;
+    layer.timeOffset = pausedTime;
+}
+
+-(void)resumeLayer:(CALayer*)layer {
+    CFTimeInterval pausedTime = [layer timeOffset];
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    layer.beginTime = timeSincePause;
+}
+
+
 - (void)viewWillAppear:(BOOL)animated 
 {
     [super viewWillAppear:animated];

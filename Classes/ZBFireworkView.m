@@ -15,6 +15,7 @@
 	ZBFireworkLayer *aLayer = [[[ZBFireworkLayer alloc] initWithHue:hue] autorelease];
 	CGPoint from = CGPointMake(location.x, self.bounds.size.height - 50.0);
 	CGPoint to = CGPointMake(location.x, (self.bounds.size.height - 100.0) * (random() % 100 / (CGFloat) 100));
+    aLayer.zPosition = random() % 100 / 100.0f;
 	[aLayer animateInLayer:self.layer from:from to:to];
 }
 
@@ -54,6 +55,11 @@
 	[[UIColor whiteColor] set];
 	[msg drawInRect:textFrame withFont:[UIFont boldSystemFontOfSize:18.0] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
 	
+    CATransform3D perspective = CATransform3DIdentity;
+    perspective.m34 = -1.0/(random()%2+1);
+    NSLog(@"%f",perspective.m34 );
+    // Apply the transform to a parent layer.
+    self.layer.sublayerTransform = perspective;
 }
 
 - (BOOL)isAccessibilityElement
