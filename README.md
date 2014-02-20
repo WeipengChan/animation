@@ -26,6 +26,7 @@
 	
 
 #Path Demo
+##知识点说明
 建立非线性动画意味着自己建立动画的值系列,它可以是一些值的数组，如果这些值的类型都是CGPoint，那么就可以指定path。在大多数情况下，使用NSValue去封装CGRect以及CATransform3D，使用NSNumber去封装CGFloat等，至于CGColorRef，则需将其转换成id类型。
 
 ##类和函数说明
@@ -66,6 +67,10 @@
 	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 	[spot addAnimation:animation forKey:@"move"];
    
+#Table view Demo
+##知识点说明
+  Animation Group。。并行动画组管理
+
 	
 
 

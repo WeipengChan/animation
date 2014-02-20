@@ -60,7 +60,7 @@
 	if (++rotateIndex >= [layers count]) {
 		rotateIndex = 0;
 	}
-	[self setNeedsLayout];
+	//[self setNeedsLayout];
 }
 
 - (void)layoutSubviews
