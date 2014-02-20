@@ -18,6 +18,7 @@
 	return self;
 }
 
+//amimation delegate
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
 	if ([theAnimation isEqual:[self animationForKey:@"move"]]) {
@@ -68,7 +69,8 @@
 	animation.fillMode = kCAFillModeForwards;
 	animation.fromValue = [NSValue valueWithCGPoint:inFrom];
 	animation.toValue = [NSValue valueWithCGPoint:inTo];
-	animation.delegate = self;
+	//先制定了delegate
+    animation.delegate = self;
 
 //	animation.autoreverses = YES;
 //	animation.repeatCount = 2;

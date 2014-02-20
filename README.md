@@ -70,8 +70,155 @@
 #Table view Demo
 ##知识点说明
   Animation Group。。并行动画组管理
+  
+    //CATransaction 让layer的属性更改以底层事务的方式更新到render tree. 
+    [CATransaction begin];
+	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+	transitionLayer.opacity = 1.0;
+	transitionLayer.contents = (id)aCell.imageView.image.CGImage;
+	transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:aCell.imageView.bounds fromView:aCell.imageView];
+	[[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
+	[CATransaction commit];
 
+##ZBAnimateTableViewController
+
+	很简单，CATransaction在这里不是必须的，但是如果要有必须马上更新到render tree的情况，使用CATransaction。
+     - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+    {
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	UITableViewCell *aCell = [tableView cellForRowAtIndexPath:indexPath];
+	[CATransaction begin];
+	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+	transitionLayer.opacity = 1.0;
+	transitionLayer.contents = (id)aCell.imageView.image.CGImage;
+	transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:aCell.imageView.bounds fromView:aCell.imageView];
+	[[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
+	[CATransaction commit];
 	
+	CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+	positionAnimation.fromValue = [NSValue valueWithCGPoint:transitionLayer.position];
+	positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointZero];
+
+	CABasicAnimation *boundsAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+	boundsAnimation.fromValue = [NSValue valueWithCGRect:transitionLayer.bounds];
+	boundsAnimation.toValue = [NSValue valueWithCGRect:CGRectZero];
+
+	CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+	opacityAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+	opacityAnimation.toValue = [NSNumber numberWithFloat:0.5];	
+	
+	CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+	rotateAnimation.fromValue = [NSNumber numberWithFloat:0 * M_PI];
+	rotateAnimation.toValue = [NSNumber numberWithFloat:2 * M_PI];	
+	
+	
+	CAAnimationGroup *group = [CAAnimationGroup animation];
+	group.beginTime = CACurrentMediaTime() + 0.25;
+	group.duration = 0.5;
+	group.animations = [NSArray arrayWithObjects:positionAnimation, boundsAnimation, opacityAnimation, rotateAnimation, nil];
+	group.delegate = self;
+	group.fillMode = kCAFillModeForwards;
+	group.removedOnCompletion = NO;
+	
+	[transitionLayer addAnimation:group forKey:@"move"];
+    }
+	
+#firework Demo
+##知识点
+3.6动画结束后。。
+ 1）setCompletionBlock: 
+ 2）使用 animationDidStart: andanimationDidStop:finished: delegate methods.
+ 
+5.3景深
+  sublayerTransform 便利的矩阵，适用于所有子类
+  zPosition,只有在父layer设定了视口的位置之后，才会产生景深。设定视口是这样子设的
+CATransform3D perspective = CATransform3DIdentity;
+perspective.m34 = -1.0/eyePosition;
+ 
+// Apply the transform to a parent layer.
+myParentLayer.sublayerTransform = perspective;
 
 
+##类和函数描述
+这个Demo首先是用子类化的圆圈layer，进行move动画（位置移动），然后爆炸动画是一个组合的动画explode（由position和opacity合成）
 
+	[CATransaction begin];
+	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+	self.position = inFrom;
+	[CATransaction commit];
+	[inSuperlayer addSublayer:self];
+	
+	//先制定了delegate
+	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+	animation.duration = 0.5;
+	animation.removedOnCompletion = NO;
+	animation.fillMode = kCAFillModeForwards;
+	animation.fromValue = [NSValue valueWithCGPoint:inFrom];
+	animation.toValue = [NSValue valueWithCGPoint:inTo];
+	animation.delegate = self;
+	[self addAnimation:animation forKey:@"move"];
+	
+	在这里继续接着组合的动画explode（由position和opacity合成）
+	- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag{。。。}
+
+   
+关于知识点景深，是我自己添加的。
+     
+    首先在是在laySubviews里面，调整视口
+    CATransform3D perspective = CATransform3DIdentity;
+    perspective.m34 = -1.0/(random()%2+1);
+    NSLog(@"%f",perspective.m34 );
+    // Apply the transform to a parent layer.
+    self.layer.sublayerTransform = perspective;
+    
+    
+    在产生和设置layer时设置aLyaer的zPosition就可以啦
+    - (void)tap:(UIGestureRecognizer *)r
+    {
+	CGPoint location = [r locationInView:self];
+	CGFloat hue = [NSDate timeIntervalSinceReferenceDate] - floor([NSDate timeIntervalSinceReferenceDate]);
+	ZBFireworkLayer *aLayer = [[[ZBFireworkLayer alloc] initWithHue:hue] autorelease];
+	CGPoint from = CGPointMake(location.x, self.bounds.size.height - 50.0);
+	CGPoint to = CGPointMake(location.x, (self.bounds.size.height - 100.0) * (random() % 100 / (CGFloat) 100));
+	
+    aLayer.zPosition = random() % 100 / 100.0f;
+	[aLayer animateInLayer:self.layer from:from to:to];
+    }
+
+#Banana Demo
+##主要类和函数说明
+###ZBBananaLayer
+   计时器timer导致的图片tiff切换，以及动画，给人一种复杂动画的感觉
+   
+##知识点
+    
+
+	-(void)pauseAndResume
+	{
+    if (bananaLayer.speed == 0)
+    {
+        [self resumeLayer:bananaLayer];
+    }
+    else
+    {
+        [self pauseLayer:bananaLayer];
+    }
+	}
+
+	-(void)pauseLayer:(CALayer*)layer {
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0.0;
+    layer.timeOffset = pausedTime;
+	}
+
+	-(void)resumeLayer:(CALayer*)layer {
+    CFTimeInterval pausedTime = [layer timeOffset];
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    layer.beginTime = timeSincePause;
+	}
+
+
+   

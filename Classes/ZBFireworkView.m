@@ -51,17 +51,24 @@
 	[[UIImage imageNamed:@"stars.jpg"] drawInRect:self.bounds];
 	
 	NSString *msg = @"Tap to fire!";
-	CGRect textFrame = CGRectMake(10.0, 20.0, self.bounds.size.width - 20.0, 30.0);
+	CGRect textFrame = CGRectMake(10.0, 64+20.0, self.bounds.size.width - 20.0, 30.0);
 	[[UIColor whiteColor] set];
 	[msg drawInRect:textFrame withFont:[UIFont boldSystemFontOfSize:18.0] lineBreakMode:UILineBreakModeTailTruncation alignment:UITextAlignmentCenter];
 	
+ 
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    //在这里决定视口位置，才能通过zposition产生景深
     CATransform3D perspective = CATransform3DIdentity;
     perspective.m34 = -1.0/(random()%2+1);
     NSLog(@"%f",perspective.m34 );
     // Apply the transform to a parent layer.
     self.layer.sublayerTransform = perspective;
 }
-
 - (BOOL)isAccessibilityElement
 {
 	return YES;
