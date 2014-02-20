@@ -49,6 +49,8 @@
 		D4F889F5133B2E1700F536FB /* ZBGridLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F889F4133B2E1700F536FB /* ZBGridLayer.m */; };
 		D4F88A08133BB67600F536FB /* ZBGridImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F88A07133BB67600F536FB /* ZBGridImageViewController.m */; };
 		D4F88A0C133BB8D900F536FB /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F88A0B133BB8D900F536FB /* UIView+Screenshot.m */; };
+		F3345B7318B5D82300CA7125 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F3345B7218B5D82300CA7125 /* Default-568h@2x.png */; };
+		F3345B7518B5E7C700CA7125 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3345B7418B5E7C700CA7125 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +122,8 @@
 		D4F88A07133BB67600F536FB /* ZBGridImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBGridImageViewController.m; sourceTree = "<group>"; };
 		D4F88A0A133BB8D900F536FB /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
 		D4F88A0B133BB8D900F536FB /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
+		F3345B7218B5D82300CA7125 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F3345B7418B5E7C700CA7125 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F3345B7418B5E7C700CA7125 /* README.md */,
+				F3345B7218B5D82300CA7125 /* Default-568h@2x.png */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -403,8 +409,10 @@
 				D447B0A4133A5F71007CB4EC /* banana4.tiff in Resources */,
 				D447B0A5133A5F71007CB4EC /* banana5.tiff in Resources */,
 				D447B0A6133A5F71007CB4EC /* banana6.tiff in Resources */,
+				F3345B7518B5E7C700CA7125 /* README.md in Resources */,
 				D447B0A7133A5F71007CB4EC /* banana7.tiff in Resources */,
 				D447B0A8133A5F71007CB4EC /* banana8.tiff in Resources */,
+				F3345B7318B5D82300CA7125 /* Default-568h@2x.png in Resources */,
 				D447B14A133A696F007CB4EC /* bike1.jpg in Resources */,
 				D447B14B133A696F007CB4EC /* bike2.jpg in Resources */,
 				D447B14C133A696F007CB4EC /* bike3.jpg in Resources */,
@@ -465,6 +473,7 @@
 				INFOPLIST_FILE = "CAShowcase-Info.plist";
 				PRODUCT_NAME = CAShowcase;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -480,6 +489,7 @@
 				INFOPLIST_FILE = "CAShowcase-Info.plist";
 				PRODUCT_NAME = CAShowcase;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -492,6 +502,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
@@ -505,6 +516,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;

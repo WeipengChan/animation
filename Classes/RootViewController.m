@@ -26,6 +26,7 @@
 {
 	[super viewDidLoad];
 	self.title = @"Showcases";
+     // self.view.frame = CGRectMake(0, 0, 320, 568);
 }
 
 #pragma mark -

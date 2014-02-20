@@ -16,9 +16,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
 {
-	self.window = [[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
-	RootViewController *controller = [[RootViewController alloc] initWithStyle:UITableViewStylePlain];
-	self.navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];	
+    self.window = [[UIWindow alloc] initWithFrame:[ [UIScreen mainScreen]bounds]];
+	
+   // CGRect rect = self.window.frame;
+    RootViewController *controller = [[RootViewController alloc] initWithStyle:UITableViewStylePlain];
+	
+    
+    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+    navigationController.view.frame = [UIScreen mainScreen].bounds;
     [self.window addSubview:navigationController.view];
     [self.window makeKeyAndVisible];
     return YES;
